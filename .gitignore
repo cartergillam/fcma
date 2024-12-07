@@ -1,0 +1,13 @@
+# Environment variables
+.env
+
+# Python cache and logs
+__pycache__/
+*.pyc
+
+# IDE and system files
+.vscode/
+.DS_Store
+
+# Node.js file
+node_modules/
