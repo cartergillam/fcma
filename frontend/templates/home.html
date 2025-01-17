@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}">
+</head>
+<body>
+    {% extends "base.html" %}
+
+    {% block title %}Home Page{% endblock %}
+
+    {% block content %}
+        <img src="{{ url_for('static', filename='images/FCMA_LOGO.png') }}" alt="FCMA Logo" class="logo">
+        <h1>Welcome to First Choice Martial Arts!</h1>
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('logout') }}"><button>Log Out</button></a>
+        {% else %}
+            <a href="{{ url_for('register') }}"><button>Register</button></a>
+            <a href="{{ url_for('login') }}"><button>Log In</button></a>
+        {% endif %}
+    {% endblock %}
+</body>
+</html>

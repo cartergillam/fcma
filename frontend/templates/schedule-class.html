@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Schedule Class</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
+</head>
+<body>
+    <h1>Schedule Class</h1>
+    <form method="POST" action="{{ url_for('schedule_class') }}">
+        <label for="class_name">Class Name:</label>
+        <input type="text" id="class_name" name="class_name" required><br>
+        <label for="class_date">Class Date:</label>
+        <input type="date" id="class_date" name="class_date" required><br>
+        <label for="class_start_time">Class Start Time:</label>
+        <input type="time" id="class_start_time" name="class_start_time" required><br>
+        <label for="class_end_time">Class End Time:</label>
+        <input type="time" id="class_end_time" name="class_end_time" required><br>
+        <button type="submit">Schedule Class</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,113 @@
+/* General reset for the body */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    align-items: center;
+    justify-content: center;
+    background-color: white; /* Set background color to white */
+    min-height: 100vh; /* Full viewport height */
+}
+
+/* Logo container */
+.logo-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 300px;
+    width: 20%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Login heading */
+.login-heading {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Input fields container */
+.inputs {
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em; /* Space between inputs */
+}
+
+/* Input fields */
+.inputs input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Input hover and focus effects */
+.inputs input:focus {
+    border-color: #007BFF;
+    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.4);
+    outline: none;
+}
+
+/* Submit button */
+button {
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.4);
+}
+
+/* Redirect message */
+.register-redirect {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #555;
+    text-align: center;
+}
+
+.register-redirect a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-redirect a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+    .login-heading {
+        font-size: 1.8rem;
+    }
+    .inputs input {
+        padding: 8px 12px;
+    }
+    button {
+        padding: 8px 12px;
+    }
+}

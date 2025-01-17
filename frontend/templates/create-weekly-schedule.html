@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Weekly Schedule</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
+</head>
+<body>
+    <h1>Create Weekly Schedule</h1>
+    <form method="POST" action="{{ url_for('create_weekly_schedule') }}">
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" required><br>
+        <label for="classes">Classes (format: ClassName,HH:MM):</label>
+        <input type="text" id="classes" name="classes" required><br>
+        <button type="submit">Create Schedule</button>
+    </form>
+</body>
+</html>

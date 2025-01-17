@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/register.css') }}">
+        <title>Sign Up</title>
+    </head>
+    <body>
+        <div class="logo-container">
+            <img class="logo" src="{{ url_for('static', filename='images/FCMA_LOGO.png') }}" alt="FCMA Logo">
+        </div>
+        <div class="signup-heading">
+            <h1>Sign Up</h1>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-messages">
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% endwith %}
+        <form class="inputs" method="POST" action="/register">
+            <input type="text" name="first_name" placeholder="First Name" required>
+            <input type="text" name="last_name" placeholder="Last Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="phone" placeholder="Phone Number" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            <div id="children-container">
+                <!-- No initial child entry -->
+            </div>
+            <button type="button" id="add-child">Add Child</button>
+            <button type="submit">Register</button>
+        </form>
+        <div class="login-redirect">
+            <p>Already have an account? <a href="{{ url_for('login') }}">Log in here.</a></p>
+        </div>
+        <script src="{{ url_for('static', filename='scripts/register.js') }}"></script>
+    </body>
+</html>

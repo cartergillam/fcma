@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: white;
+}
+
+h1 {
+    color: #333;
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+img.logo {
+    width: 200px;
+    margin-top: 20px;
+}
+
+ul.flashes {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul.flashes li {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+ul.flashes li.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+ul.flashes li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}

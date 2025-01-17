@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: white;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.calendar .day {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.calendar .day h3 {
+    margin-top: 0;
+}
+
+.calendar .class {
+    background-color: #007BFF;
+    color: white;
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.calendar .class:hover {
+    background-color: #0056b3;
+}

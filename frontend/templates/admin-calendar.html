@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Calendar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/calendar.css') }}">
+</head>
+<body>
+    <h1>Admin Calendar</h1>
+    <div class="calendar">
+        {% for day in calendar %}
+            <div class="day">
+                <h3>{{ day.date }}</h3>
+                {% for class in day.classes %}
+                    <div class="class" onclick="editClass('{{ class._id }}')">
+                        {{ class.class_name }}<br>
+                        {{ class.class_start_time }} - {{ class.class_end_time }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    <a href="{{ url_for('schedule_class') }}"><button>Schedule a Class</button></a>
+    <a href="{{ url_for('renew_schedule') }}"><button>Renew Schedule</button></a>
+    <script>
+        function editClass(classId) {
+            window.location.href = '/edit-class/' + classId;
+        }
+    </script>
+</body>
+</html>
