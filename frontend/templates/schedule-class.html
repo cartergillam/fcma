@@ -4,19 +4,62 @@
     <meta charset="UTF-8">
     <title>Schedule Class</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/schedule-class.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
-    <h1>Schedule Class</h1>
-    <form method="POST" action="{{ url_for('schedule_class') }}">
-        <label for="class_name">Class Name:</label>
-        <input type="text" id="class_name" name="class_name" required><br>
-        <label for="class_date">Class Date:</label>
-        <input type="date" id="class_date" name="class_date" required><br>
-        <label for="class_start_time">Class Start Time:</label>
-        <input type="time" id="class_start_time" name="class_start_time" required><br>
-        <label for="class_end_time">Class End Time:</label>
-        <input type="time" id="class_end_time" name="class_end_time" required><br>
-        <button type="submit">Schedule Class</button>
-    </form>
+    <div class="logo-container">
+        <img class="logo" src="{{ url_for('static', filename='images/FCMA_LOGO.png') }}" alt="FCMA Logo">
+    </div>
+    <div class="form-container">
+        <h1>Schedule Class</h1>
+        <form method="POST" action="{{ url_for('schedule_class') }}" id="scheduleClassForm">
+            <div class="form-group">
+                <label for="class_name">Class Name:</label>
+                <input type="text" id="class_name" name="class_name" required>
+            </div>
+            <div class="form-group">
+                <label for="class_date">Class Date:</label>
+                <input type="text" id="class_date" name="class_date" class="flatpickr" required>
+            </div>
+            <div class="form-group">
+                <label for="class_start_time">Class Start Time:</label>
+                <input type="text" id="class_start_time" class="flatpickr-time" required>
+                <input type="hidden" id="class_start_time_24" name="class_start_time">
+            </div>
+            <div class="form-group">
+                <label for="class_end_time">Class End Time:</label>
+                <input type="text" id="class_end_time" class="flatpickr-time" required>
+                <input type="hidden" id="class_end_time_24" name="class_end_time">
+            </div>
+            <div class="form-group">
+                <label for="max_students">Max Students:</label>
+                <input type="number" id="max_students" name="max_students" required>
+            </div>
+            <button type="submit">Schedule Class</button>
+        </form>
+        <a href="{{ url_for('admin_calendar') }}"><button class="back-button">Back to Calendar</button></a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr(".flatpickr", {
+            dateFormat: "Y-m-d"
+        });
+        flatpickr(".flatpickr-time", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "h:i K",
+            time_24hr: false,
+            onChange: function(selectedDates, dateStr, instance) {
+                const time24 = instance.formatDate(selectedDates[0], "H:i");
+                instance.element.nextElementSibling.value = time24;
+            }
+        });
+
+        document.getElementById("scheduleClassForm").addEventListener("submit", function() {
+            document.getElementById("class_start_time_24").value = flatpickr.formatDate(document.getElementById("class_start_time")._flatpickr.selectedDates[0], "H:i");
+            document.getElementById("class_end_time_24").value = flatpickr.formatDate(document.getElementById("class_end_time")._flatpickr.selectedDates[0], "H:i");
+        });
+    </script>
 </body>
 </html>
