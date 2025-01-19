@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: white;
+}
+
+.logo-container {
+    width: 100%;              /* Full width of the screen */
+    display: flex;            /* Enable flexbox for alignment */
+    justify-content: center;  /* Center horizontally */
+    padding: 20px 0;          /* Add some padding at the top and bottom */
+}
+
+.logo {
+    max-width: 300px;         /* Maximum width for the logo */
+    width: 20%;               /* Make it responsive relative to screen size */
+    height: auto;             /* Maintain aspect ratio */
+    object-fit: contain;      /* Ensure it doesn't distort */
+}
+
+.dashboard-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    flex-wrap: wrap;          /* Ensure the content wraps on smaller screens */
+}
+
+.user-info, .user-classes {
+    width: 45%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;      /* Add some margin at the bottom */
+}
+
+h2 {
+    color: #333;
+}
+
+p {
+    color: #555;
+    font-size: 16px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;   /* Ensure the background color is white */
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.logout-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.logout-button:hover {
+    background-color: #c82333;
+}
