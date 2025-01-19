@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/user-dashboard.css') }}">
+</head>
+<body>
+    <div class="logo-container">
+        <img class="logo" src="{{ url_for('static', filename='images/FCMA_LOGO.png') }}" alt="FCMA Logo">
+    </div>
+    <div class="dashboard-container">
+        <div class="user-info">
+            <h2>User Information</h2>
+            <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+            <p>Email: {{ user.email }}</p>
+            <p>Phone: {{ user.phone }}</p>
+        </div>
+        <div class="user-classes">
+            <h2>Upcoming Classes</h2>
+            <div id="bookedClasses">
+                {% for child in user.children %}
+                    <h3>{{ child.first_name }} {{ child.last_name }}</h3>
+                    <ul>
+                        {% if user.classes[child._id|string] and user.classes[child._id|string]|length > 0 %}
+                            {% for class in user.classes[child._id|string] %}
+                                <li>
+                                    {{ class.class_name }} ({{ class.class_date }} {{ class.class_start_time }} - {{ class.class_end_time }})
+                                    <button onclick="removeBooking('{{ class.booking_id }}')">Remove</button>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li>No upcoming classes</li>
+                        {% endif %}
+                    </ul>
+                {% endfor %}
+                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                <ul>
+                    {% if user.classes[user._id|string] and user.classes[user._id|string]|length > 0 %}
+                        {% for class in user.classes[user._id|string] %}
+                            <li>
+                                {{ class.class_name }} ({{ class.class_date }} {{ class.class_start_time }} - {{ class.class_end_time }})
+                                <button onclick="removeBooking('{{ class.booking_id }}')">Remove</button>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li>No upcoming classes</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <a href="{{ url_for('user_calendar') }}"><button>View Calendar</button></a>
+    <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+    <script src="{{ url_for('static', filename='scripts/dashboard.js') }}"></script>
+</body>
+</html>
