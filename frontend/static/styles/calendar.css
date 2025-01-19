@@ -1,7 +1,42 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: white;
+}
+
+.logo-container {
+    width: 100%;              /* Full width of the screen */
+    display: flex;            /* Enable flexbox for alignment */
+    justify-content: center;  /* Center horizontally */
+    padding: 20px 0;          /* Add some padding at the top and bottom */
+}
+
+.logo {
+    max-width: 300px;         /* Maximum width for the logo */
+    width: 20%;               /* Make it responsive relative to screen size */
+    height: auto;             /* Maintain aspect ratio */
+    object-fit: contain;      /* Ensure it doesn't distort */
+}
+
+.back-to-dashboard {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.back-to-dashboard:hover {
+    background-color: #0056b3;
 }
 
 h1, h2 {
@@ -23,33 +58,236 @@ button:hover {
     background-color: #0056b3;
 }
 
-.calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
-    margin-top: 20px;
+.calendar-container {
+    display: flex;
+    justify-content: flex-start; /* Align items to the start */
+    align-items: flex-start;
+    gap: 20px;
+    position: relative; /* Add relative positioning */
 }
 
-.calendar .day {
-    border: 1px solid #ddd;
+.calendar {
+    flex-grow: 1; /* Allow the calendar to grow and fill available space */
+    max-width: calc(100% - 320px); /* Adjust width to account for the side menu */
+    border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
-    background-color: #f9f9f9;
+    box-shadow: 0 0 5px #ccc;
+    transition: max-width 0.3s; /* Smooth transition for width change */
 }
 
-.calendar .day h3 {
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 10px;
+}
+
+.weekdays div {
+    text-transform: uppercase;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.days div {
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+    max-height: 150px;
+    overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.days div.today {
+    background-color: #f2f2f2;
+}
+
+.days div.selected {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.days.locked div {
+    pointer-events: none; /* Disable pointer events */
+    opacity: 0.5; /* Reduce opacity to indicate locked state */
+}
+
+.side-menu {
+    width: 300px; /* Adjust width to ensure enough space for the edit form */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 5px #ccc;
+    display: none;
+    background-color: white; /* Ensure background color */
+    max-height: 100%; /* Ensure it doesn't overflow vertically */
+    overflow-y: auto; /* Add vertical scrolling if needed */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    position: absolute; /* Position it absolutely within the container */
+    right: 0; /* Align it to the right */
+    top: 0; /* Align it to the top */
+}
+
+.side-menu.open {
+    display: block;
+}
+
+.side-menu.open ~ .calendar {
+    max-width: calc(100% - 320px); /* Adjust width to account for the side menu */
+}
+
+.side-menu h2 {
     margin-top: 0;
 }
 
-.calendar .class {
+.class-item {
     background-color: #007BFF;
     color: white;
-    padding: 5px;
+    padding: 10px;
     margin: 5px 0;
     border-radius: 3px;
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center text */
+}
+
+.class-item div {
+    text-align: center; /* Center text */
+}
+
+.class-item button {
+    background-color: #e74c3c;
+    border: none;
+    padding: 5px 10px; /* Smaller padding */
+    cursor: pointer;
+    color: white;
+    border-radius: 3px;
+    margin-top: 5px; /* Add space between buttons */
+    width: auto; /* Adjust width */
+    text-align: center; /* Center text */
+    font-size: 14px; /* Smaller font size */
+}
+
+.class-item button:hover {
+    background-color: #c0392b;
+}
+
+.edit-class-form {
+    display: none;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 5px #ccc;
+    width: 100%; /* Ensure it fits within the side menu */
+    position: relative; /* Ensure it is positioned correctly within the side menu */
+}
+
+.edit-class-form h3 {
+    margin-top: 0;
+}
+
+.edit-class-form label {
+    display: block;
+    margin-top: 10px;
+}
+
+.edit-class-form input {
+    width: calc(100% - 20px);
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.edit-class-form button {
+    margin-top: 10px;
+}
+
+.close-btn {
+    background-color: #ccc;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.close-btn:hover {
+    background-color: #999;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.action-buttons button {
+    margin-bottom: 10px;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.popup h3 {
+    margin-top: 0;
+}
+
+.popup form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-.calendar .class:hover {
+.popup button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+}
+
+.popup button[type="submit"]:hover {
     background-color: #0056b3;
+}
+
+.popup button[type="button"] {
+    background-color: #6c757d;
+    color: white;
+}
+
+.popup button[type="button"]:hover {
+    background-color: #5a6268;
 }
