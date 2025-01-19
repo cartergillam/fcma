@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Calendar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/calendar.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body class="user">
+    <div class="logo-container">
+        <img class="logo" src="{{ url_for('static', filename='images/FCMA_LOGO.png') }}" alt="FCMA Logo">
+    </div>
+    <a href="{{ url_for('user_dashboard') }}" class="back-to-dashboard">Back to Dashboard</a>
+    <div class="calendar-container">
+        <div class="calendar">
+            <!-- Calendar header -->
+            <div class="header">
+                <button id="prevWeekBtn">&lt;</button>
+                <h2 id="currentWeek"></h2>
+                <button id="nextWeekBtn">&gt;</button>
+                <button id="toggleViewBtn">Switch to Monthly View</button>
+            </div>
+            <!-- Calendar body -->
+            <div class="weekdays">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+            <div class="days"></div>
+        </div>
+        <div class="side-menu" id="sideMenu">
+            <h2>Classes on <span id="selectedDate"></span></h2>
+            <div id="classList"></div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="{{ url_for('static', filename='scripts/calendar.js') }}"></script>
+    <script>
+        flatpickr(".flatpickr", {
+            dateFormat: "Y-m-d"
+        });
+
+        function openSideMenu() {
+            document.getElementById("sideMenu").classList.add("open");
+        }
+
+        function closeSideMenu() {
+            document.getElementById("sideMenu").classList.remove("open");
+        }
+
+        // Automatically fetch and render classes when the page loads
+        document.addEventListener("DOMContentLoaded", function() {
+            // Set the user ID in session storage
+            fetch('/api/user')
+                .then(response => response.json())
+                .then(data => {
+                    sessionStorage.setItem('user_id', data.user_id);
+                    fetchClassesAndRender();
+                });
+        });
+    </script>
+</body>
+</html>
