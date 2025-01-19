@@ -6,13 +6,113 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
 </head>
 <body>
-    <h1>Admin Dashboard</h1>
-    <h2>User List</h2>
-    <ul>
-        {% for user in users %}
-            <li>{{ user.first_name }} {{ user.last_name }} - {{ user.email }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{{ url_for('schedule_class') }}"><button>Schedule a Class</button></a>
+    <div class="logo-container">
+        <img class="logo" src="{{ url_for('static', filename='images/FCMA_LOGO.png') }}" alt="FCMA Logo">
+    </div>
+    <div class="dashboard-container">
+        <div class="user-list">
+            <h2>Users</h2>
+            <input type="text" id="userSearch" placeholder="Search users...">
+            <ul id="userList">
+                {% for user in users %}
+                    {% if not user.is_admin %}
+                        <li onclick="showUserDetails('{{ user._id }}')">{{ user.first_name }} {{ user.last_name }}</li>
+                        {% for child in user.children %}
+                            <li onclick="viewChildDetails('{{ child._id }}')">{{ child.first_name }} {{ child.last_name }}</li>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="user-details" id="userDetails" style="display: none;">
+            <button class="close-button" onclick="hideUserDetails()">&#x2716;</button>
+            <h2>User Details</h2>
+            <div id="userInfo"></div>
+            <h3>Classes</h3>
+            <ul id="userClasses"></ul>
+        </div>
+        <div class="today-classes">
+            <h2>Today's Classes</h2>
+            <ul id="todayClasses">
+                {% for class in today_classes %}
+                    <li>{{ class.class_name }} ({{ class.class_start_time }} - {{ class.class_end_time }})</li>
+                {% endfor %}
+            </ul>
+            <a href="{{ url_for('admin_calendar') }}"><button>View Calendar</button></a>
+        </div>
+    </div>
+    <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+    <script>
+        document.getElementById('userSearch').addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase();
+            const userListItems = document.querySelectorAll('#userList li');
+            userListItems.forEach(item => {
+                if (item.textContent.toLowerCase().includes(searchValue)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        function showUserDetails(userId) {
+            console.log("Fetching details for user:", userId); // Debugging information
+            fetch(`/api/user/${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Fetched user details:", data); // Debugging information
+                    const userInfo = document.getElementById('userInfo');
+                    userInfo.innerHTML = `
+                        <p>Name: ${data.first_name} ${data.last_name}</p>
+                        <p>Email: ${data.email}</p>
+                        <p>Phone: ${data.phone}</p>
+                    `;
+                    const userClasses = document.getElementById('userClasses');
+                    userClasses.innerHTML = '';
+                    Object.keys(data.classes).forEach(childId => {
+                        data.classes[childId].forEach(classInfo => {
+                            const classItem = document.createElement('li');
+                            classItem.textContent = `${classInfo.class_name} (${classInfo.class_date} ${classInfo.class_start_time} - ${classInfo.class_end_time})`;
+                            userClasses.appendChild(classItem);
+                        });
+                    });
+                    document.getElementById('userDetails').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error("Error fetching user details:", error); // Debugging information
+                });
+        }
+
+        function viewChildDetails(childId) {
+            console.log("Fetching details for child:", childId); // Debugging information
+            fetch(`/api/child/${childId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Fetched child details:", data); // Debugging information
+                    const userInfo = document.getElementById('userInfo');
+                    userInfo.innerHTML = `
+                        <p>Name: ${data.first_name} ${data.last_name}</p>
+                        <p>Email: ${data.email}</p>
+                        <p>Phone: ${data.phone}</p>
+                    `;
+                    const userClasses = document.getElementById('userClasses');
+                    userClasses.innerHTML = '';
+                    data.classes.forEach(classInfo => {
+                        const classItem = document.createElement('li');
+                        classItem.textContent = `${classInfo.class_name} (${classInfo.class_date} ${classInfo.class_start_time} - ${classInfo.class_end_time})`;
+                        userClasses.appendChild(classItem);
+                    });
+                    document.getElementById('userDetails').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error("Error fetching child details:", error); // Debugging information
+                });
+        }
+
+        function hideUserDetails() {
+            document.getElementById('userDetails').style.display = 'none';
+        }
+    </script>
+    <script src="{{ url_for('static', filename='scripts/calendar.js') }}"></script>
 </body>
 </html>
