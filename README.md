@@ -1,6 +1,6 @@
 # FCMA - Class Management System
 
-A custom class booking and management system for a local karate school.
+A custom class booking and management system for First Choice Martial Arts, Hamilton, Ontario.
 This project is in early alpha and provides basic functionality for both administrators (to manage classes) and students (to view/book classes).  
 **Features include:**
 
