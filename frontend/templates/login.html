@@ -10,28 +10,28 @@
         <div class="logo-container">
             <img class="logo" src="{{ url_for('static', filename='images/FCMA_LOGO.png') }}" alt="FCMA Logo">
         </div>
-        <div class="login-heading">
+        <div class="login-container">
             <h1>Login</h1>
-        </div>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          <div class="flash-messages">
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }}">
-                {{ message }}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              <div class="flash-messages">
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">
+                    {{ message }}
+                  </div>
+                {% endfor %}
               </div>
-            {% endfor %}
-          </div>
-        {% endif %}
-        {% endwith %}
-        <form class="inputs" method="POST" action="/login">
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-        </form>
-        <p class="register-redirect">
-            Don't have an account? <a href="/register">Sign up here</a>.
-        </p>
+            {% endif %}
+            {% endwith %}
+            <form method="POST" action="{{ url_for('login') }}">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
+            <a href="{{ url_for('register') }}">Register</a>
+        </div>
         <script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
     </body>
 </html>
