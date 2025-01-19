@@ -1,31 +1,92 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Admin Calendar</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/calendar.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
-<body>
-    <h1>Admin Calendar</h1>
-    <div class="calendar">
-        {% for day in calendar %}
-            <div class="day">
-                <h3>{{ day.date }}</h3>
-                {% for class in day.classes %}
-                    <div class="class" onclick="editClass('{{ class._id }}')">
-                        {{ class.class_name }}<br>
-                        {{ class.class_start_time }} - {{ class.class_end_time }}
-                    </div>
-                {% endfor %}
-            </div>
-        {% endfor %}
+<body class="admin">
+    <div class="logo-container">
+        <img class="logo" src="{{ url_for('static', filename='images/FCMA_LOGO.png') }}" alt="FCMA Logo">
     </div>
-    <a href="{{ url_for('schedule_class') }}"><button>Schedule a Class</button></a>
-    <a href="{{ url_for('renew_schedule') }}"><button>Renew Schedule</button></a>
+    <a href="{{ url_for('admin_dashboard') }}" class="back-to-dashboard">Back to Dashboard</a>
+    <div class="calendar-container">
+        <div class="calendar">
+            <!-- Calendar header -->
+            <div class="header">
+                <button id="prevWeekBtn">&lt;</button>
+                <h2 id="currentWeek"></h2>
+                <button id="nextWeekBtn">&gt;</button>
+                <button id="toggleViewBtn">Switch to Monthly View</button>
+            </div>
+            <!-- Calendar body -->
+            <div class="weekdays">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+            <div class="days"></div>
+        </div>
+        <div class="side-menu" id="sideMenu">
+            <h2>Classes on:</h2>
+            <h2> <span id="selectedDate"></span></h2>
+            <div id="classList"></div>
+            <form id="editClassForm" class="edit-class-form">
+                <h3>Edit Class</h3>
+                <label for="editClassName">Class Name:</label>
+                <input type="text" id="editClassName" name="class_name" required><br>
+                <label for="editClassDate">Class Date:</label>
+                <input type="text" id="editClassDate" name="class_date" class="flatpickr" required><br>
+                <label for="editClassStartTime">Class Start Time:</label>
+                <input type="text" id="editClassStartTime" class="flatpickr-time" required>
+                <input type="hidden" id="editClassStartTime_24" name="class_start_time"><br>
+                <label for="editClassEndTime">Class End Time:</label>
+                <input type="text" id="editClassEndTime" class="flatpickr-time" required>
+                <input type="hidden" id="editClassEndTime_24" name="class_end_time"><br>
+                <label for="editMaxStudents">Max Students:</label>
+                <input type="number" id="editMaxStudents" name="max_students" required><br>
+                <button type="submit">Save Changes</button>
+                <button type="button" id="discardChangesBtn">Discard Changes</button>
+            </form>
+        </div>
+    </div>
+    <div class="action-buttons">
+        <a href="{{ url_for('schedule_class') }}"><button>Schedule a Class</button></a>
+        <a href="{{ url_for('renew_schedule') }}"><button>Renew Schedule</button></a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="{{ url_for('static', filename='scripts/calendar.js') }}"></script>
     <script>
-        function editClass(classId) {
-            window.location.href = '/edit-class/' + classId;
+        flatpickr(".flatpickr", {
+            dateFormat: "Y-m-d"
+        });
+        flatpickr(".flatpickr-time", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "h:i K",
+            time_24hr: false,
+            onChange: function(selectedDates, dateStr, instance) {
+                const time24 = instance.formatDate(selectedDates[0], "H:i");
+                instance.element.nextElementSibling.value = time24;
+            }
+        });
+
+        document.getElementById("editClassForm").addEventListener("submit", function() {
+            document.getElementById("editClassStartTime_24").value = flatpickr.formatDate(document.getElementById("editClassStartTime")._flatpickr.selectedDates[0], "H:i");
+            document.getElementById("editClassEndTime_24").value = flatpickr.formatDate(document.getElementById("editClassEndTime")._flatpickr.selectedDates[0], "H:i");
+        });
+
+        function openSideMenu() {
+            document.getElementById("sideMenu").classList.add("open");
+        }
+
+        function closeSideMenu() {
+            document.getElementById("sideMenu").classList.remove("open");
         }
     </script>
 </body>
